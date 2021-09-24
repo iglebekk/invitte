@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AppController::class, 'dashboard'])->name('dashboard');
 
     Route::post('/events', [EventController::class, 'create'])->name('events');
+    Route::get('/events/{event}', [EventController::class, 'view'])->name('event');
+
+    Route::post('/events/{event}/guests', [GuestController::class, 'create'])->name('guests');
 });

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\AccessControllService;
+use App\Models\Event;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -26,5 +29,14 @@ class EventController extends Controller
         }
 
         return redirect()->route('dashboard')->with('status', 'Arrangementet ble opprettet.');
+    }
+
+    public function view(Event $event)
+    {
+        AccessControllService::userModel('events', $event);
+
+        return view('event')
+            ->with('event', $event)
+            ->with('guests', $event->guests()->orderByDesc('id')->paginate());
     }
 }

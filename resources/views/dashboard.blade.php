@@ -24,7 +24,7 @@
             <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
             <p>Gjester: {{ $event->guests_count }}
             </p>
-            <button class="btn btn-outline-dark" type="button">Example button</button>
+            <a class="btn btn-outline-dark" href="{{ route('event', $event->id) }}">Se arrangementet</a>
         </div>
     </div>
     @empty

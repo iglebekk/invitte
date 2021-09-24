@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
                 'sms_sender_name' => 'Event ' . $i
             ]);
             $o = 0;
-            while ($o < 5) {
+            while ($o < 50) {
                 $o++;
                 $guest = $event->guests()->create([
                     'phone' => $i . '456451' . $o,
