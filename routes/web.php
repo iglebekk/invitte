@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +26,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AppController::class, 'dashboard'])->name('dashboard');
+
+    Route::post('/events', [EventController::class, 'create'])->name('events');
 });
