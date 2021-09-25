@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/{event}', [EventController::class, 'view'])->name('event');
 
     Route::post('/events/{event}/guests', [GuestController::class, 'create'])->name('guests');
+    Route::post('/evetns/{event}/guests/mass', [GuestController::class, 'massCreate'])->name('guests.mass');
 
     Route::get('/events/{event}/accesses', [AccessController::class, 'view'])->name('accesses');
     Route::post('/events/{event}/accesses', [AccessController::class, 'store'])->name('accesses');

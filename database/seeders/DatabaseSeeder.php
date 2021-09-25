@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
                 'sms_sender_name' => 'Event ' . $i
             ]);
             $o = 0;
-            while ($o < 50) {
+            while ($o < 25) {
                 $o++;
                 $guest = $event->guests()->create([
                     'phone' => $i . '456451' . $o,
@@ -40,5 +40,20 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        $event = $user->events()->create([
+            'name' => 'The Main Event',
+            'invitation_text' => 'Lorem ipsum...',
+            'sms_text' => 'Du har mottatt en invitasjon til The Main Event',
+            'sms_sender_name' => 'The Main Event'
+        ]);
+        $guest = $event->guests()->create([
+            'phone' => '004745505898',
+            'name' => 'Anders Iglebekk'
+        ]);
+        $guest = $event->guests()->create([
+            'phone' => '004747831938',
+            'name' => 'Monica Iglebekk'
+        ]);
     }
 }

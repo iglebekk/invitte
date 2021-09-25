@@ -44,7 +44,8 @@
             </div>
             <div class="py-5 d-grid gap-2">
                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#newGuestModal">Legg til en gjest</button>
-                <a href="" class="btn btn-light">Legg til flere gjester</a>
+                <button class="btn btn-light"  data-bs-toggle="modal" data-bs-target="#newGuestsModal">Legg til flere gjester</button>
+
             </div>
             <div class="py-5 d-grid gap-2">
                 <a href="{{ route('accesses', $event->id) }}" class="btn btn-dark">Tilgangskontroll</a>
@@ -85,7 +86,7 @@
                     <div class="col-4">
                         @php
                             $phone = $guest->phone;
-                            echo (strlen($phone) == 8) ? $phone : '00' . substr($phone, 0, 2) . ' ' . substr($phone, 2, 8);
+                            echo (strlen($phone) == 12) ? substr($phone, 0, 4) . ' ' . substr($phone, 4, 12) : '00' . substr($phone, 0, 2) . ' ' . substr($phone, 2, 8);
                         @endphp
                     </div>
                     <div class="col-2">
@@ -109,9 +110,7 @@
             </form>
             </div>
         </div>
-
     </div>
-
 
     @endsection
     @section('bottom')
@@ -133,6 +132,29 @@
                             <input type="text" class="form-control" id="phone" placeholder="40040400" name="phone" value="{{ old('phone') }}" required>
                             <label for="phone">Telefon <span class="text-muted small">40040400</span></label>
                             <span class="text-muted small">Hvis det er utenlandsk nummer, legg til firesiftret landkode før telefonnummeret. Eks: <b>0048</b>40040040</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Lukk</button>
+                        <button type="submit" class="btn btn-primary">Lagre</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-dark" id="newGuestsModal" tabindex="-1" aria-labelledby="newGuestsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newGuestsModal">Legg til en gjest</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('guests.mass', $event) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <textarea type="text" class="form-control mb-2" id="data" name="data" required value="{{ old('data') }}" rows="20" cols="40" style="height: 20vh;"></textarea>
+                            <p>Legg inn liste med navn og telefonnummer. Skill navn og telefonnummer med komma og hver person med linjeskift.</p>
                         </div>
                     </div>
                     <div class="modal-footer">
