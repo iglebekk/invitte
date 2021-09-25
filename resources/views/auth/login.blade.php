@@ -2,18 +2,18 @@
 
 @section('content')
 
-<!-- Show errors -->
+@include('components.error')
+
 <form action="{{ route('login') }}" method="POST">
     @csrf
     <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
+      <label for="email" class="form-label">E-postadresse</label>
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required value="anders@tolvtemann.no">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+      <label for="password" class="form-label">Passord</label>
       <input type="password" class="form-control" id="password" name="password" required value="password">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Logg inn</button>
   </form>
 @endsection

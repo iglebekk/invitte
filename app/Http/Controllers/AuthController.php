@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -33,5 +35,36 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function password(string $token)
+    {
+        if (!$user = User::where('resetToken', $token)->first()) abort(404);
+
+        return view('auth.password')->with('user', $user);
+    }
+
+    public function addPassword(string $token, Request $request)
+    {
+        if (!$user = User::where('resetToken', $token)->first()) abort(404);
+
+        $validated = $request->validate([
+            'name' => ['required'],
+            'email' => ['required'],
+            'password' => ['required']
+        ]);
+
+        $validated['resetToken'] = Str::uuid();
+
+        $user->update($validated);
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        Auth::login($user);
+
+        return redirect()->route('dashboard')
+            ->with('status', 'Brukeren din er oppdatert. Velkommen!');
     }
 }

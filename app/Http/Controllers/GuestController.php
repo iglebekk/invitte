@@ -23,7 +23,7 @@ class GuestController extends Controller
         ]);
 
         if (strlen($request->phone) == 8) {
-            $validated['phone'] = 47 . $request->phone;
+            $validated['phone'] = 0047 . $request->phone;
         }
 
         $event->guests()->create($validated);

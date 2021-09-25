@@ -46,6 +46,9 @@
                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#newGuestModal">Legg til en gjest</button>
                 <a href="" class="btn btn-light">Legg til flere gjester</a>
             </div>
+            <div class="py-5 d-grid gap-2">
+                <a href="{{ route('accesses', $event->id) }}" class="btn btn-dark">Tilgangskontroll</a>
+            </div>
 
 
         </div>
@@ -82,7 +85,7 @@
                     <div class="col-4">
                         @php
                             $phone = $guest->phone;
-                            echo (strlen($phone) == 8) ? $phone : '+' . substr($phone, 0, 2) . ' ' . substr($phone, 2, 8);
+                            echo (strlen($phone) == 8) ? $phone : '00' . substr($phone, 0, 2) . ' ' . substr($phone, 2, 8);
                         @endphp
                     </div>
                     <div class="col-2">
@@ -129,7 +132,7 @@
                         <div class="form-floating">
                             <input type="text" class="form-control" id="phone" placeholder="40040400" name="phone" value="{{ old('phone') }}" required>
                             <label for="phone">Telefon <span class="text-muted small">40040400</span></label>
-                            <span class="text-muted small">Hvis det er utenlandsnummer, legg til tosiftret landkode før telefonnummeret. Eks: <b>48</b>40040040</span>
+                            <span class="text-muted small">Hvis det er utenlandsk nummer, legg til firesiftret landkode før telefonnummeret. Eks: <b>0048</b>40040040</span>
                         </div>
                     </div>
                     <div class="modal-footer">
