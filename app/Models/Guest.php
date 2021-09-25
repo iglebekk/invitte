@@ -9,7 +9,7 @@ class Guest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone', 'sms_invitation', 'sms_reminder', 'attanding', 'responded', 'viewed'];
+    protected $fillable = ['name', 'phone', 'sms_invitation', 'sms_reminder', 'attending', 'responded', 'viewed', 'invitation_token'];
 
     public function event()
     {

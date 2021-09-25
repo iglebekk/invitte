@@ -2,18 +2,28 @@
 
 namespace App\Http\Services;
 
+use Illuminate\Support\Facades\Http;
+
 class FikoService
 {
 
-    protected static $url = 'http://api.fiko.no/?api=smsOut';
+    protected static $uri = 'http://api.fiko.no/?api=smsOut';
     protected static $token = 'eaea01bbcb7a37604292b87d42b8f774';
-    protected static $client = 'Tolvte Mann';
-    protected static $sender = '';
-    protected static $recipient = '';
-    protected static $message = '';
 
-    public static function send(array $data)
+    /**
+     * @param $data['recipient'] Phone number of recipient
+     */
+
+    public static function send(array $data): bool
     {
-        //
+        $url = self::$uri . '&token=' . self::$token . '&client=Invitte&sender=' . $data['sender'] . '&recipient=' . $data['recipient'] . '&message=' . $data['message'];
+
+        $response = Http::get($url);
+
+        if ($response->failed()) {
+            Log::critical($response->body());
+            return false;
+        }
+        return true;
     }
 }

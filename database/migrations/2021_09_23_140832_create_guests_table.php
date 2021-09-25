@@ -16,6 +16,7 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
+            $table->uuid('invitation_token');
             $table->string('phone');
             $table->string('name')->nullable();
             $table->boolean('sms_invitation')->default(0);

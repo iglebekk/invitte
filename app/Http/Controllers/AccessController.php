@@ -43,6 +43,25 @@ class AccessController extends Controller
 
         $event->users()->attach($user->id);
 
-        return redirect()->route('accesses', $event->id);
+        return redirect()
+            ->route('accesses', $event->id)
+            ->with('status', 'Bruker lagt til.');
+    }
+
+    public function remove(Event $event, User $user)
+    {
+        AccessControllService::userModel('events', $event);
+        if (!$event->users->contains($user)) abort(403);
+
+        if ($user->id === auth()->user()->id) {
+            return redirect()
+                ->route('accesses', $event)
+                ->withErrors(['Det er ikke mulig å fjerne seg selv.']);
+        }
+        $event->users()->detach($user->id);
+
+        return redirect()
+            ->route('accesses', $event)
+            ->with('status', 'Bruker fjernet.');
     }
 }

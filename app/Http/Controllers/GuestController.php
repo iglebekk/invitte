@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\AccessControllService;
 use App\Models\Event;
+use App\Models\Guest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
 
 
 class GuestController extends Controller
@@ -23,7 +25,7 @@ class GuestController extends Controller
         ]);
 
         $validated['phone'] = $this->validatePhone($request->phone);
-
+        $validated['invitation_token'] = Str::uuid();
         $event->guests()->create($validated);
 
         return redirect()->route('event', $event)->with('status', 'Ny gjest lagret.');
@@ -44,10 +46,23 @@ class GuestController extends Controller
 
             $event->guests()->create([
                 'name' => $profile[0],
-                'phone' => $this->validatePhone(str_replace(' ', '', str_replace("\r", '', $profile[1])))
+                'phone' => $this->validatePhone(str_replace(' ', '', str_replace("\r", '', $profile[1]))),
+                'invitation_token' => Str::uuid()
             ]);
         }
         return redirect()->route('event', $event)->with('status', 'Nye gjester lagret.');
+    }
+
+    public function remove(Event $event, Guest $guest)
+    {
+        AccessControllService::userModel('events', $event);
+        if (!$event->guests->contains($guest)) abort(403);
+
+        $guest->delete();
+
+        return redirect()
+            ->route('event', $event)
+            ->with('status', 'Gjest fjernet.');
     }
 
     private function validatePhone(string $phone)

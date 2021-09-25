@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
                 $guest = $event->guests()->create([
                     'phone' => $i . '456451' . $o,
                     'name' => 'Guest ' . $o . $i,
+                    'invitation_token' => Str::uuid()
                 ]);
             }
         }
@@ -49,11 +51,13 @@ class DatabaseSeeder extends Seeder
         ]);
         $guest = $event->guests()->create([
             'phone' => '004745505898',
-            'name' => 'Anders Iglebekk'
+            'name' => 'Anders Iglebekk',
+            'invitation_token' => Str::uuid()
         ]);
         $guest = $event->guests()->create([
             'phone' => '004747831938',
-            'name' => 'Monica Iglebekk'
+            'name' => 'Monica Iglebekk',
+            'invitation_token' => Str::uuid()
         ]);
     }
 }
