@@ -24,7 +24,7 @@
             <div class="display-5 mb-5">
                 {{ $event->name }}
             </div>
-            <div class="container border rounded-3 py-3">
+            <div class="container border rounded-3 py-3 mb-5">
                 <div class="row my-2">
                     <div class="col-10">Gjester:</div>
                     <div class="col-2">{{ $event->guests()->count() }}</div>
@@ -42,12 +42,23 @@
                     <div class="col-2">{{ $event->guests()->where('attending', 0)->where('viewed', 1)->count() }}</div>
                 </div>
             </div>
-            <div class="py-5 d-grid gap-2">
+            <div class="py-3 d-grid gap-2">
                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#newGuestModal">Legg til en gjest</button>
                 <button class="btn btn-light"  data-bs-toggle="modal" data-bs-target="#newGuestsModal">Legg til flere gjester</button>
-
             </div>
-            <div class="py-5 d-grid gap-2">
+            <div class="p-3 d-grid gap-2 border rounded-3">
+                <button class="btn btn-warning"
+                @if ($event->guests()->where('sms_invitation', 0)->count() < 1)
+                    disabled
+                @endif
+                data-bs-toggle="modal" data-bs-target="#">Send SMS ({{ $event->guests()->where('sms_invitation', 0)->count() }})</button>
+                <button class="btn btn-danger"
+                @if ($event->guests()->where('sms_invitation', 1)->where('sms_reminder', 0)->count() < 1)
+                disabled
+                @endif
+                data-bs-toggle="modal" data-bs-target="#">Send påminnelse ({{ $event->guests()->where('sms_invitation', 1)->where('sms_reminder', 0)->count() }})</button>
+            </div>
+            <div class="py-3 d-grid gap-2">
                 <a href="{{ route('accesses', $event->id) }}" class="btn btn-dark">Tilgangskontroll</a>
             </div>
 
@@ -58,56 +69,65 @@
         <div class="p-5 bg-light text-dark rounded-3 h-100">
             <div class="container">
                 <form action="">
-                <div class="row border-bottom mb-2">
-                    {{-- <div class="col-1 mb-9">
-                        #
-                    </div> --}}
-                    <div class="col-4 h5 mb-1">
-                        Navn
+                    <div class="row border-bottom mb-2">
+                        {{-- <div class="col-1 mb-9">
+                            #
+                        </div> --}}
+                        <div class="col-4 h5 mb-1">
+                            Navn
+                        </div>
+                        <div class="col-4 h5 mb-1">
+                            Telefon
+                        </div>
+                        <div class="col-2 h5 mb-1">
+                            Status
+                        </div>
+                        {{-- <div class="col-1 h5 mb-1">
+                            #
+                        </div> --}}
                     </div>
-                    <div class="col-4 h5 mb-1">
-                        Telefon
-                    </div>
-                    <div class="col-2 h5 mb-1">
-                        Status
-                    </div>
-                    <div class="col-1 h5 mb-1">
-                        #
-                    </div>
-                </div>
-                @forelse ($guests as $guest)
-                <div class="row mb-1 align-items-center">
-                    {{-- <div class="col-1">
-                        <input type="checkbox" id="guest-{{ $guest->id }}" name="guest-{{ $guest->id }}" value="{{ $guest->id }}">
-                    </div> --}}
-                    <div class="col-4">
-                        {{ $guest->name }}
-                    </div>
-                    <div class="col-4">
-                        @php
+                    @forelse ($guests as $guest)
+                    <div class="row mb-1 align-items-center">
+                        {{-- <div class="col-1">
+                            <input type="checkbox" id="guest-{{ $guest->id }}" name="guest-{{ $guest->id }}" value="{{ $guest->id }}">
+                        </div> --}}
+                        <div class="col-4">
+                            {{ $guest->name }}
+                        </div>
+                        <div class="col-4">
+                            @php
                             $phone = $guest->phone;
                             echo (strlen($phone) == 12) ? substr($phone, 0, 4) . ' ' . substr($phone, 4, 12) : '00' . substr($phone, 0, 2) . ' ' . substr($phone, 2, 8);
-                        @endphp
-                    </div>
-                    <div class="col-2">
-                        Venter
-                    </div>
-                    <div class="col-1">
-                        <button class="btn btn-primary btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                              </svg>
-                        </button>
-                    </div>
-                </div>
-                @empty
-                Ingen gjester funnet.
-                @endforelse
+                            @endphp
+                        </div>
+                        <div class="col-2">
+                            @php
+                            $status = "Venter.";
+                            if ($guest->sms_invitation) $status = "SMS sendt.";
+                            if ($guest->sms_reminder) $status = "Påminnelse sendt.";
+                            if ($guest->viewed) $status = "Har sett invitasjonen.";
+                            if ($guest->responded) $status = "Deltar ikke.";
+                            if ($guest->attanding) $status = "Deltar.";
+                            echo $status;
+                            @endphp
 
-                <div class="d-flex justify-content-center mt-5">
-                    {!! $guests->links() !!}
-                </div>
-            </form>
+                        </div>
+                        {{-- <div class="col-1">
+                            <button class="btn btn-primary btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                            </button>
+                        </div> --}}
+                    </div>
+                    @empty
+                    Ingen gjester funnet.
+                    @endforelse
+
+                    <div class="d-flex justify-content-center mt-5">
+                        {!! $guests->links() !!}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
