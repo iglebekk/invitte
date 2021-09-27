@@ -18,7 +18,7 @@
 
 <div class="row align-items-md-stretch">
 
-    <div class="col-xl-6 mb-4">
+    <div class="col-xl-7 mb-4">
         <div class="p-5 bg-light text-dark rounded-3 h-100">
             <h1>SMS</h1>
             <p>Dette er meldingen som blir sendt ut til alle. Lenke til selve invitasjonen blir autmatisk inkludert. Her kan du forandre avsender og innholde hvis du ønsker.</p>
@@ -43,13 +43,13 @@
             </form>
         </div>
     </div>
-    <div class="col-xl-6 mb-4">
-        <div class="p-5 bg-light text-dark rounded-3 h-100">
+    <div class="col-xl-5 mb-4">
+        <div class="p-5 bg-info text-dark rounded-3 h-100">
             <h4>Forhåndsvisning</h1>
                 <div class="p-4 bg-dark text-light rounded-3">
                     <h5>Fra: {{ $event->sms_sender_name }}</h5>
                     {{ $event->sms_text }}<br />
-                    Følg lenken for å se invitasjonen: <a href="#">http:// {{ config('app.url') }}/invitasjon/s3h38fjk3</a>
+                    Følg lenken for å se invitasjonen: <a href="#">{{ config('app.url') }}/invitasjon/s3h38fjk3</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 
     <div class="row align-items-md-stretch">
 
-        <div class="col-xl-6 mb-4">
+        <div class="col-xl-7 mb-4">
             <div class="p-5 bg-light text-dark rounded-3 h-100">
 
                 <h1>Tekst i invitasjonen</h1>
@@ -74,12 +74,12 @@
 
             </div>
         </div>
-        <div class="col-xl-6 mb-4">
+        <div class="col-xl-5 mb-4">
 
-            <div class="p-5 bg-light text-dark rounded-3 h-100">
-                <h4>Forhåndsvisning</h4>
+            <div class="p-5 bg-info text-dark rounded-3 h-100">
+                <h4 class="">Forhåndsvisning</h4>
                 <div class="p-4 bg-dark text-light rounded-3">
-                    <h1 class="display-6">Hei Kari Nordmann</h1>
+                    <h1 class="display-6">Hei Kari</h1>
                     <div style="min-height: 10vh;">
                         {!! $event->invitation_text !!}
                     </div>

@@ -21,7 +21,7 @@ class EventController extends Controller
 
         $data = [
             'name' => $request->name,
-            'invitation_text' => 'Rediger denne. Dette er teksten i invitasjonen som sendes til de inviterte. Her bør det være informasjon om for eksempel tid og sted.',
+            'invitation_text' => 'Du er invitert til ' . $request->name . '. <br /> Gi beskjed om du har anledning til å være med.',
             'sms_text' => 'Du er herved invitert!',
             'sms_sender_name' => config('app.name')
         ];
