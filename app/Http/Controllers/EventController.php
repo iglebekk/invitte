@@ -78,7 +78,7 @@ class EventController extends Controller
 
         foreach ($recipients as $recipient) {
             $data['recipient'] = $recipient->phone;
-            $data['message'] = 'Dette er en påminnelse om invitasjon til ' . $event->name . " Følg lenken for å se invitasjonen: " . config('app.url') . '/invitation/' . $recipient->invitation_token;
+            $data['message'] = 'Dette er en påminnelse om invitasjon.' . " Følg lenken for å se invitasjonen: " . config('app.url') . '/invitation/' . $recipient->invitation_token;
             if (!FikoService::send($data)) abort(500);
 
             $recipient->update([
