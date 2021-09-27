@@ -96,4 +96,21 @@ class EventController extends Controller
         return view('settings')
             ->with('event', $event);
     }
+
+    public function settingsStore(Event $event, Request $request)
+    {
+        AccessControllService::userModel('events', $event);
+
+        $validated = $request->validate([
+            'sms_sender_name' => 'string',
+            'sms_text' => 'string',
+            'invitation_text' => 'string'
+        ]);
+
+        $event->update($validated);
+
+        return redirect()
+            ->route('event.settings', $event)
+            ->with('status', 'Innstillingene er lagret!');
+    }
 }

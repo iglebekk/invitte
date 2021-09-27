@@ -21,10 +21,11 @@
     <div class="col-xl-4 mb-4">
         <div class="h-100 p-5 text-dark bg-light rounded-3">
             <h2>{{ $event->name }}</h2>
-            <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
             <p>Gjester: {{ $event->guests_count }}
             </p>
-            <a class="btn btn-outline-dark" href="{{ route('event', $event->id) }}">Se arrangementet</a>
+            <div class="row">
+                <a class="btn btn-outline-dark" href="{{ route('event', $event->id) }}">Se arrangementet</a>
+            </div>
         </div>
     </div>
     @empty

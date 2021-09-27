@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/{event}', [EventController::class, 'view'])->name('event');
 
     Route::get('/events/{event}/settings', [EventController::class, 'settings'])->name('event.settings');
+    Route::post('/events/{event}/settings', [EventController::class, 'settingsStore'])->name('event.settings');
+
 
     Route::post('/events/{event}/guests', [GuestController::class, 'create'])->name('guests');
     Route::post('/evetns/{event}/guests/mass', [GuestController::class, 'massCreate'])->name('guests.mass');
