@@ -21,6 +21,7 @@
     <div class="col-xl-6 mb-4">
         <div class="p-5 bg-light text-dark rounded-3 h-100">
             <h1>SMS</h1>
+            <p>Dette er meldingen som blir sendt ut til alle. Lenke til selve invitasjonen blir autmatisk inkludert.</p>
             <h4>Navn på avsender</h4>
             <form class="form" action="{{ route('event.settings', $event) }}" method="POST">
                 @csrf
