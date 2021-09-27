@@ -21,7 +21,7 @@
     <div class="col-xl-6 mb-4">
         <div class="p-5 bg-light text-dark rounded-3 h-100">
             <h1>SMS</h1>
-            <p>Dette er meldingen som blir sendt ut til alle. Lenke til selve invitasjonen blir autmatisk inkludert.</p>
+            <p>Dette er meldingen som blir sendt ut til alle. Lenke til selve invitasjonen blir autmatisk inkludert. Her kan du forandre avsender og innholde hvis du ønsker.</p>
             <h4>Navn på avsender</h4>
             <form class="form" action="{{ route('event.settings', $event) }}" method="POST">
                 @csrf
@@ -62,6 +62,7 @@
             <div class="p-5 bg-light text-dark rounded-3 h-100">
 
                 <h1>Tekst i invitasjonen</h1>
+                <p>Dette er invitasjonen gjesten kommer til når h*n klikker på lenken. Her bør alt av nødvendig informasjon være med. Eksempelvis tid og sted.</p>
                 <form class="form" action="{{ route('event.settings', $event) }}" method="POST">
                     @csrf
                     <textarea name="invitation_text" id="summernote" class="form-control textarea invitation_text" cols="30" rows="10" style="min-height: 30vh;">{{ $event->invitation_text }}</textarea>
