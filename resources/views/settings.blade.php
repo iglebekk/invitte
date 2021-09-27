@@ -24,7 +24,7 @@
             <h4>Navn på avsender</h4>
             <form class="form" action="{{ route('event.settings', $event) }}" method="POST">
                 @csrf
-                <input type="text" name="sms_text" id="sms_text" class="form-control" value="{{ $event->sms_sender_name }}" />
+                <input type="text" name="sms_sender_name" id="sms_sender_name" class="form-control" value="{{ $event->sms_sender_name }}" />
 
                 <div class="justify-content-end d-flex">
                     <button type="submit" class="btn btn-primary mt-3">Lagre</button>
