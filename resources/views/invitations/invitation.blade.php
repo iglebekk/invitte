@@ -6,7 +6,7 @@
 
 @section('content')
 
-<h1>Hei {{ $guest->name }}</h1>
+<h1 class="display-6">Hei {{ $guest->name }}</h1>
 <div>
 {{ $event->invitation_text }}
 </div>
