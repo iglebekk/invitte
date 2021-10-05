@@ -40,7 +40,7 @@
             @yield('content')
 
             <footer class="pt-3 mt-4 text-muted border-top">
-                &copy; 2021 - Baked by <a href="http://www.iglebekk.no" class="text-decoration-none text-muted">Iglebekk&Co</a> - Har du ønsker eller tilbakemeldinger? <a href="mailto:post@invitte.no">Ta kontakt her!</a>
+                &copy; 2021 - Baked by <a href="http://www.iglebekk.no" class="text-decoration-none text-muted">Iglebekk&Co</a> - Har du ønsker eller tilbakemeldinger? <a href="mailto:post@invitte.no" class="text-decoration-none text-muted">Ta kontakt her!</a>
             </footer>
         </div>
     </main>
