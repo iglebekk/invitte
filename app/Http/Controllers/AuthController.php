@@ -55,7 +55,7 @@ class AuthController extends Controller
         ]);
 
         $validated['resetToken'] = Str::uuid();
-
+        $validated['password'] = Hash::make($validated['Password']);
         $user->update($validated);
 
         Auth::logout();
