@@ -53,10 +53,10 @@
                 @endif
                 data-bs-toggle="modal" data-bs-target="#confirmInvitation">Send SMS ({{ $event->guests()->where('sms_invitation', 0)->where('responded', 0)->count() }})</button>
                 <button class="btn btn-danger"
-                @if ($event->guests()->where('sms_invitation', 1)->where('sms_reminder', 0)->where('responded', 0)->count() < 1)
+                @if ($event->guests()->where('sms_invitation', 1)->where('responded', 0)->count() < 1)
                 disabled
                 @endif
-                data-bs-toggle="modal" data-bs-target="#confirmReminder">Send påminnelse ({{ $event->guests()->where('sms_invitation', 1)->where('sms_reminder', 0)->where('responded', 0)->count() }})</button>
+                data-bs-toggle="modal" data-bs-target="#confirmReminder">Send påminnelse ({{ $event->guests()->where('sms_invitation', 1)->where('responded', 0)->count() }})</button>
             </div>
             <div class="py-3 d-grid gap-2">
                 <a href="{{ route('accesses', $event) }}" class="btn btn-dark">Tilgangskontroll</a>
